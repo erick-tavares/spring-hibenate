@@ -21,12 +21,15 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    private StatusPedido status;
+
     public Pedido() {
     }
 
-    public Pedido(Instant data, Usuario usuario) {
+    public Pedido(Instant data, Usuario usuario, StatusPedido status) {
         this.data = data;
         this.usuario = usuario;
+        this.status = status;
     }
 
     public Instant getData() {
@@ -47,5 +50,13 @@ public class Pedido implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPedido status) {
+        this.status = status;
     }
 }
