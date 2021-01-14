@@ -1,14 +1,15 @@
-package br.com.curso.springhibernate.entities;
+package br.com.curso.springhibernate.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class User implements Serializable {
+@Table(name = "usuario")
+public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +19,14 @@ public class User implements Serializable {
     private String telefone;
     private String senha;
 
-    public User() {
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario")
+    private List<Pedido> pedidoList;
+
+    public Usuario() {
     }
 
-    public User(String nome, String email, String telefone, String senha) {
+    public Usuario(String nome, String email, String telefone, String senha) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
@@ -60,12 +65,20 @@ public class User implements Serializable {
         this.senha = senha;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(nome, user.nome) && Objects.equals(email, user.email) && Objects.equals(telefone, user.telefone) && Objects.equals(senha, user.senha);
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(telefone, usuario.telefone) && Objects.equals(senha, usuario.senha);
     }
 
     @Override

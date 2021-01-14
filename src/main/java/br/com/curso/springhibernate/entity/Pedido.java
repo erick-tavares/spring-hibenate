@@ -1,0 +1,51 @@
+package br.com.curso.springhibernate.entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+
+@Entity
+@Table(name = "pedido")
+public class Pedido implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm:ss", timezone = "GMT")
+    private Instant data;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    public Pedido() {
+    }
+
+    public Pedido(Instant data, Usuario usuario) {
+        this.data = data;
+        this.usuario = usuario;
+    }
+
+    public Instant getData() {
+        return data;
+    }
+
+    public void setData(Instant data) {
+        this.data = data;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Long getId() {
+        return id;
+    }
+}
