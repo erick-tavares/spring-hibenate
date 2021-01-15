@@ -1,16 +1,25 @@
 package br.com.curso.springhibernate.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "categorica")
+@Table(name = "categoria")
 public class Categoria implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categoriaSet")
+    private Set<Produto> produtoSet = new HashSet<>();
 
     public Categoria() {
     }
@@ -19,12 +28,20 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Produto> getProdutoSet() {
+        return produtoSet;
     }
 
     @Override
