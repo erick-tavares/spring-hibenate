@@ -1,8 +1,10 @@
 package br.com.curso.springhibernate.config;
 
+import br.com.curso.springhibernate.entity.Categoria;
 import br.com.curso.springhibernate.entity.Pedido;
 import br.com.curso.springhibernate.entity.StatusPedido;
 import br.com.curso.springhibernate.entity.Usuario;
+import br.com.curso.springhibernate.repository.CategoriaRepository;
 import br.com.curso.springhibernate.repository.PedidoRepository;
 import br.com.curso.springhibernate.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     @Override
     public void run(String... args) throws Exception {
         Usuario u1 = new Usuario("Maria Brown", "maria@gmail.com", "988888888", "123456");
@@ -32,7 +37,12 @@ public class TestConfig implements CommandLineRunner {
         Pedido p2 = new Pedido(Instant.parse("2019-07-21T03:42:10Z"), u2, StatusPedido.PAGO);
         Pedido p3 = new Pedido(Instant.parse("2019-07-22T15:21:22Z"), u1, StatusPedido.PAGO);
 
+        Categoria cat1 = new Categoria("Electronics");
+        Categoria cat2 = new Categoria("Books");
+        Categoria cat3 = new Categoria("Computers");
+
         usuarioRepository.saveAll(Arrays.asList(u1,u2));
         pedidoRepository.saveAll(Arrays.asList(p1,p2,p3));
+        categoriaRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
     }
 }
