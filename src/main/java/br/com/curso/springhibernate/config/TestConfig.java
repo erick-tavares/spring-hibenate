@@ -1,10 +1,7 @@
 package br.com.curso.springhibernate.config;
 
 import br.com.curso.springhibernate.entity.*;
-import br.com.curso.springhibernate.repository.CategoriaRepository;
-import br.com.curso.springhibernate.repository.PedidoRepository;
-import br.com.curso.springhibernate.repository.ProdutoRepository;
-import br.com.curso.springhibernate.repository.UsuarioRepository;
+import br.com.curso.springhibernate.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,6 +61,13 @@ public class TestConfig implements CommandLineRunner {
         pro5.getCategoriaSet().add(cat2);
 
         produtoRepository.saveAll(Arrays.asList(pro1,pro2,pro3,pro4,pro5));
+
+        ItemPedido i1 = new ItemPedido(p1, pro1, 2, pro1.getPreco());
+        ItemPedido i2 = new ItemPedido(p1, pro3, 1, pro3.getPreco());
+        ItemPedido i3 = new ItemPedido(p2, pro3, 2, pro3.getPreco());
+        ItemPedido i4 = new ItemPedido(p3, pro5, 2, pro5.getPreco());
+
+        itemPedidoRepository.saveAll(Arrays.asList(i1,i2,i3,i4));
 
     }
 }

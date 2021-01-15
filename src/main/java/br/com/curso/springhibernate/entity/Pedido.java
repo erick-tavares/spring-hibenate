@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pedido")
@@ -22,6 +24,9 @@ public class Pedido implements Serializable {
     private Usuario usuario;
 
     private StatusPedido status;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> ttensPedido = new HashSet<>();
 
     public Pedido() {
     }
@@ -58,5 +63,9 @@ public class Pedido implements Serializable {
 
     public void setStatus(StatusPedido status) {
         this.status = status;
+    }
+
+    public Set<ItemPedido> getTtensPedido() {
+        return ttensPedido;
     }
 }
