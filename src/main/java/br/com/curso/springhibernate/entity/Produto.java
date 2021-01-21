@@ -1,5 +1,7 @@
 package br.com.curso.springhibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -21,6 +23,9 @@ public class Produto implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private Set<Categoria> categoriaSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itensPedido = new HashSet<>();
 
     public Produto() {}
 
@@ -65,6 +70,15 @@ public class Produto implements Serializable {
 
     public Set<Categoria> getCategoriaSet() {
         return categoriaSet;
+    }
+
+    @JsonIgnore
+    public Set<Pedido> getPedido() {
+        Set<Pedido> pedidos = new HashSet<>();
+        for(ItemPedido item : itensPedido){
+            pedidos.add(item.getPedido());
+        }
+        return pedidos;
     }
 
     @Override

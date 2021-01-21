@@ -26,7 +26,7 @@ public class Pedido implements Serializable {
     private StatusPedido status;
 
     @OneToMany(mappedBy = "id.pedido")
-    private Set<ItemPedido> ttensPedido = new HashSet<>();
+    private Set<ItemPedido> itensPedido = new HashSet<>();
 
     public Pedido() {
     }
@@ -65,7 +65,7 @@ public class Pedido implements Serializable {
         this.status = status;
     }
 
-    public Set<ItemPedido> getTtensPedido() {
-        return ttensPedido;
+    public Set<ItemPedido> getItensPedido() {
+        return itensPedido;
     }
 }
