@@ -2,6 +2,7 @@ package br.com.curso.springhibernate.service;
 
 import br.com.curso.springhibernate.entity.Usuario;
 import br.com.curso.springhibernate.repository.UsuarioRepository;
+import br.com.curso.springhibernate.service.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class UsuarioService {
         Optional<Usuario> user = usuarioRepository.findById(id);
 
         if (user.isPresent()){
-            return user.get();
+            return user.orElseThrow(() -> new ResourceNotFoundException(id));
         }
         LOGGER.info("O id {} não foi encontrado", id);
         throw new IllegalArgumentException();
