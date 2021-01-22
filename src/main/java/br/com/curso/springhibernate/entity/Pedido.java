@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -78,5 +79,26 @@ public class Pedido implements Serializable {
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public double getTotal(){
+        double soma = 0.0;
+        for (ItemPedido item : itensPedido){
+            soma += item.getSubTotal();
+        }
+        return soma;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pedido)) return false;
+        Pedido pedido = (Pedido) o;
+        return Objects.equals(data, pedido.data) && Objects.equals(usuario, pedido.usuario) && status == pedido.status && Objects.equals(itensPedido, pedido.itensPedido) && Objects.equals(pagamento, pedido.pagamento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(data, usuario, status, itensPedido, pagamento);
     }
 }

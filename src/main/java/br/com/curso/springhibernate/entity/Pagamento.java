@@ -1,6 +1,7 @@
 package br.com.curso.springhibernate.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Pagamento implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm:ss", timezone = "GMT")
     private Instant data;
 
+    @JsonIgnore
     @OneToOne
     @MapsId
     private Pedido pedido;

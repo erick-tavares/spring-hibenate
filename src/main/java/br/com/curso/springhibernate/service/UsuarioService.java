@@ -32,4 +32,8 @@ public class UsuarioService {
         throw new IllegalArgumentException();
     }
 
+    public Usuario save(Usuario usuario){
+        return usuarioRepository.save(usuario);
+    }
+
 }
